@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 import es.upm.dit.apsv.webLab.dao.ResearcherDAO;
 import es.upm.dit.apsv.webLab.model.Researcher;
 
@@ -24,10 +27,12 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ResearcherDAO rdao = new ResearcherDAO();
+		UserService userService = UserServiceFactory.getUserService();
+		Researcher researcher = new Researcher();
 		
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		Researcher researcher = rdao.readAsUser(email, password);
+//		Researcher researcher = rdao.readAsUser(email, password);
 		
 		// Administrator mode if user and password are the same
 		if (ADMIN.equals(email) && ADMIN.equals(password)) {
@@ -39,7 +44,9 @@ public class LoginServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/AdminServlet");
 			
 		// Normal researcher access	
-		} else if (null != researcher) {
+		} else if (null != req.getUserPrincipal()) {
+			researcher = rdao.readAsUser(email, password);
+			
 			req.getSession().setAttribute("userAdmin", "false");
 			req.getSession().setAttribute("user", researcher);
 			resp.sendRedirect(req.getContextPath() + "/ResearcherServlet" + "?id=" + researcher.getId());

@@ -24,7 +24,7 @@ public class PopulateResearchersServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Part filePart = req.getPart("file");
 		InputStream fileContent = filePart.getInputStream();
-		BufferedReader bReader = new BufferedReader(new InputStreamReader(fileContent, "UTF-8"));
+		BufferedReader bReader = new BufferedReader(new InputStreamReader(fileContent));
 		Researcher r = new Researcher();
 		ResearcherDAO rdao = new ResearcherDAO();
 		

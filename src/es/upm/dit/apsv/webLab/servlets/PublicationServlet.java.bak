@@ -23,7 +23,6 @@ public class PublicationServlet extends HttpServlet {
 		Publication publication = pdao.read(publicationId);
 		
 		req.getSession().setAttribute("publication", publication);
-		req.getSession().setAttribute("firstAuthor", publication.getFirstAuthor());
 		req.getSession().setAttribute("authors", rdao.parseResearchers(publication.getAuthors()));
 
 		getServletContext().getRequestDispatcher("/PublicationView.jsp").forward(req, resp);
