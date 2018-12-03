@@ -31,5 +31,28 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<c:if test="${researcher.getId() == firstAuthor || userAdmin}">
+
+		<h3>Update publication</h3>
+			<form action="UpdatePublicationServlet" method="post">
+				<input type="hidden" name="id" value="${publication.getId()}" />
+				<p>
+					Name: <input type="text" name="name" value="${publication.getPublicationName()}" />
+				</p>
+				<p>
+					Title: <input type="text" name="title" value="${publication.getTitle()}" />
+				</p>
+				<p>
+					Publication date: <input type="publication_date" name="email" value="${publication.getPublicationDate()}" />
+				</p>
+				<p>
+					Cite count: <input type="text" name="cite_count" value="${publication.getCiteCount()}" />
+				</p>
+				<p>
+					First author: <input type="text" name="first_author" value="${publication.getFirstAuthor()}" />
+				</p>
+				<button type="submit">Update</button>
+			</form>
+	</c:if>
 </body>
 </html>

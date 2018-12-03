@@ -28,7 +28,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<c:if test="${researcher==user || userAdmin}">
+	<c:if test="${researcher.getId() == user.getId() || userAdmin}">
 
 		<h3>Update info</h3>
 			<form action="UpdateResearcherServlet" method="post">
@@ -77,7 +77,8 @@
 				</p>
 				<button type="submit">Create</button>
 			</form>
-			<form action="GenerateCVServlet">
+			<form action="GenerateCVServlet" method="get">
+				<input type="hidden" name="id" value="${researcher.id}" />
 				<button type="submit">Generate CV</button>
 			</form>
 	</c:if>
